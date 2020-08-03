@@ -7,13 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Customer {
-  @Id
-  @GeneratedValue
-  private Long id;
-
-  @Column(length = 100)
-  private String name;
+public class Customer extends BaseUser {
 
   @Column(length = 18)
   private String phoneNumber;
@@ -21,22 +15,6 @@ public class Customer {
 
   @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Pet> pets = new ArrayList<>();
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getPhoneNumber() {
     return phoneNumber;

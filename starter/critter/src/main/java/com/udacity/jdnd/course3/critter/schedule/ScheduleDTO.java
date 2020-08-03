@@ -11,41 +11,49 @@ import java.util.Set;
  * to the database directly.
  */
 public class ScheduleDTO {
-    private long id;
-    private List<Long> employeeIds;
-    private List<Long> petIds;
-    private LocalDate date;
-    private Set<EmployeeSkill> activities;
+  private long id;
+  private List<Long> employeeIds;
+  private List<Long> petIds;
+  private LocalDate date;
+  private Set<EmployeeSkill> activities;
 
-    public List<Long> getEmployeeIds() {
-        return employeeIds;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setEmployeeIds(List<Long> employeeIds) {
-        this.employeeIds = employeeIds;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public List<Long> getPetIds() {
-        return petIds;
-    }
+  public List<Long> getEmployeeIds() {
+    return employeeIds;
+  }
 
-    public void setPetIds(List<Long> petIds) {
-        this.petIds = petIds;
-    }
+  public void setEmployeeIds(List<Long> employeeIds) {
+    this.employeeIds = employeeIds;
+  }
 
-    public LocalDate getDate() {
-        return date;
-    }
+  public List<Long> getPetIds() {
+    return petIds;
+  }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+  public void setPetIds(List<Long> petIds) {
+    this.petIds = petIds;
+  }
 
-    public Set<EmployeeSkill> getActivities() {
-        return activities;
-    }
+  public LocalDate getDate() {
+    return date;
+  }
 
-    public void setActivities(Set<EmployeeSkill> activities) {
-        this.activities = activities;
-    }
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
+  public Set<EmployeeSkill> getActivities() {
+    return activities;
+  }
+
+  public void setActivities(Set<EmployeeSkill> activities) {
+    this.activities = activities;
+  }
 }
