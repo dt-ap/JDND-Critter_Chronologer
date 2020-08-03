@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ScheduleService {
 
   private final ScheduleRepository repository;
@@ -36,7 +37,6 @@ public class ScheduleService {
     return repository.findAllByPetsOwnerId(customerId);
   }
 
-  @Transactional
   public Schedule createSchedule(Schedule schedule, List<Long> empIds, List<Long> petIds) {
     var employees = empRepository.findAllById(empIds);
     var pets = petRepository.findAllById(petIds);

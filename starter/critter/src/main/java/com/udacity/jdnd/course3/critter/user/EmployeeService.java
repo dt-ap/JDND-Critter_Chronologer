@@ -5,20 +5,19 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class EmployeeService {
 
-  @PersistenceContext
-  private final EntityManager entityManager;
   private final EmployeeRepository repository;
 
-  public EmployeeService(EntityManager entityManager, EmployeeRepository repository) {
-    this.entityManager = entityManager;
+  public EmployeeService(EmployeeRepository repository) {
     this.repository = repository;
   }
 
@@ -35,9 +34,10 @@ public class EmployeeService {
     return repository.findForService(skills, (long) skills.size(), dows);
   }
 
-  public Employee setEmployeeAvailability(Long id, Set<DayOfWeek> dows) {
-    var employee = entityManager.getReference(Employee.class, id);
+  public Employee setEmployeeAvailability(Long id, Set<DayOfWeek> dows) throws RuntimeException {
+    var employee = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Employee with id: '" + id + "' does not exist."));
     employee.addDaysAvailable(dows);
-    return entityManager.merge(employee);
+    return employee;
   }
 }

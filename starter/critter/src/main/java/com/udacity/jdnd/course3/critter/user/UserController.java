@@ -1,7 +1,9 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.pet.Pet;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.DayOfWeek;
 import java.util.List;
@@ -58,7 +60,11 @@ public class UserController {
 
   @PutMapping("/employee/{id}")
   public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long id) {
-    employeeService.setEmployeeAvailability(id, daysAvailable);
+    try {
+      employeeService.setEmployeeAvailability(id, daysAvailable);
+    } catch (RuntimeException ex) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
   }
 
   @GetMapping("/employee/availability")
@@ -122,8 +128,7 @@ public class UserController {
    * @return DTO with relationship ids.
    */
   private EmployeeDTO employeeToDTOWithRel(Employee employee) {
-    var dto = employeeToDTO(employee);
-    return dto;
+    return employeeToDTO(employee);
   }
 
 }

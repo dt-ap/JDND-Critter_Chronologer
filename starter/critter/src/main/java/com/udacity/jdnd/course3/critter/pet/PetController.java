@@ -1,8 +1,12 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +24,12 @@ public class PetController {
 
   @PostMapping
   public PetDTO savePet(@RequestBody PetDTO dto) {
-    var pet = service.createPet(petFromDTO(dto), dto.getOwnerId());
-    return petToDTOWithRel(pet);
+    try {
+      var pet = service.createPet(petFromDTO(dto), dto.getOwnerId());
+      return petToDTOWithRel(pet);
+    } catch (RuntimeException ex) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
   }
 
   @GetMapping("/{petId}")
